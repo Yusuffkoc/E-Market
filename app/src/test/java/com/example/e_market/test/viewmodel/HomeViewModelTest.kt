@@ -23,8 +23,8 @@ import java.io.IOException
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
 
-//    @get:Rule
-//    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
+    val testCoroutineRule = CoroutineTestRule()
 
     @Mock
     private lateinit var mockProductRepository: ProductRepositoryImpl
@@ -32,9 +32,10 @@ class HomeViewModelTest {
     @Mock
     private lateinit var mockApplication: Application
 
-    private lateinit var homeViewModel: HomeViewModel
+    @Mock
+    private lateinit var repository: ProductRepositoryImpl
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    private lateinit var homeViewModel: HomeViewModel
 
     @Before
     fun setUp() {
@@ -44,17 +45,25 @@ class HomeViewModelTest {
         homeViewModel = HomeViewModel(mockApplication, mockProductRepository)
     }
 
-//    @Test
-//    fun `test getProducts when internet is available`() = testDispatcher.runBlockingTest {
-//        Mockito.`when`(mockProductRepository.getProducts()).thenReturn(Response.success(ProductResponse(listOf())))
-//        homeViewModel.getProducts()
-//        assertEquals(Resource.Success(ProductResponse(listOf())), homeViewModel.productsResponse.value)
-//    }
-//
-//    @Test
-//    fun `test getProducts when internet is not available`() = testDispatcher.runBlockingTest {
-//        Mockito.`when`(mockProductRepository.getProducts()).thenThrow(IOException())
-//        homeViewModel.getProducts()
-//        assertEquals(Resource.Error("Network Failure"), homeViewModel.productsResponse.value)
-//    }
+    @Test
+    fun `test getProducts when internet is available`() = testCoroutineRule.testCoroutineScope.runBlockingTest {
+        homeViewModel.getProducts()
+        Mockito.verify(repository, Mockito.times(1)).getProducts()
+    }
+    @Test
+    fun `test getFavouritedProducts`() = testCoroutineRule.testCoroutineScope.runBlockingTest {
+        homeViewModel.getAllFavouritedProject()
+        Mockito.verify(repository, Mockito.times(1)).getFavouritedProducts()
+    }
+
+    @Test
+    fun `updateProductQuantity calls safeCallUpdateQuantity in viewModelScope`() =
+        testCoroutineRule.testCoroutineScope.runBlockingTest {
+            var product = Mockito.mock(ShoppingBoxItem::class.java)
+            product.quantity = 1
+            product.id = 1
+            homeViewModel.updateProductQuantity(product)
+            Mockito.verify(repository, Mockito.times(1)).updateQuantity(product.quantity, product.id)
+        }
+
 }

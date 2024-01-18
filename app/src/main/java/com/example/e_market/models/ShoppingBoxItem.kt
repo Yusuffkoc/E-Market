@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "shoppingboxitem")
 data class ShoppingBoxItem(
     @PrimaryKey
-    val id: Int,
+    var id: Int,
     val brand: String? = null,
     val createdAt: String? = null,
     val description: String? = null,
