@@ -22,42 +22,29 @@ import org.mockito.MockitoAnnotations
 class DetailViewModelTest {
 
     @Mock
-    private lateinit var mockProductRepository: ProductRepository
+    private lateinit var mockProductRepository: ProductRepositoryImpl
 
     private lateinit var detailViewModel: DetailViewModel
 
     private val testDispatcher = TestCoroutineDispatcher()
 
-//    @Before
-//    fun setUp() {
-//        MockitoAnnotations.openMocks(this)
-//        Dispatchers.setMain(testDispatcher)
-//
-//        // Mock ProductRepository
-//        mockProductRepository = Mockito.mock(ProductRepositoryImpl::class.java)
-//
-//        // Initialize ViewModel with Mock ProductRepository
-//        detailViewModel = DetailViewModel(mockProductRepository)
-//    }
-//
-//    @After
-//    fun tearDown() {
-//        Dispatchers.resetMain()
-//        testDispatcher.cleanupTestCoroutines()
-//    }
-//
-//    @Test
-//    fun `test saveFavouriteProduct`() {
-//        // Given
-//        val mockProduct = ProductResponseItem(/* set your desired values */)
-//
-//        // When
-//        detailViewModel.saveFavouriteProduct(mockProduct)
-//
-//        // Then
-//        // Add assertions here based on the expected behavior
-//        // Verify interactions with mock objects if needed
-//    }
-//
-//    // Add more tests for other functions as needed
+    @Before
+    fun setUp() {
+        MockitoAnnotations.openMocks(this)
+        Dispatchers.setMain(testDispatcher)
+        mockProductRepository = Mockito.mock(ProductRepositoryImpl::class.java)
+        detailViewModel = DetailViewModel(mockProductRepository)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
+
+    @Test
+    fun `test saveFavouriteProduct`() {
+        val mockProduct = ProductResponseItem(id = 1,brand = "Honda")
+        detailViewModel.saveFavouriteProduct(mockProduct)
+    }
 }

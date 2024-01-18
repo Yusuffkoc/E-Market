@@ -35,50 +35,32 @@ class ShoppingBoxViewModelTest {
     @Test
     fun `getShoppinBoxProduct calls getSafeCallShoppingBoxProduct in viewModelScope`() =
         testCoroutineRule.testCoroutineScope.runBlockingTest {
-            // Act
             viewModel.getShoppinBoxProduct()
-
-            // Assert
             verify(repository, times(1)).getShoppingBoxProducts()
         }
 
     @Test
     fun `updateProductQuantity calls safeCallUpdateQuantity in viewModelScope`() =
         testCoroutineRule.testCoroutineScope.runBlockingTest {
-            // Arrange
             val product = mock(ShoppingBoxItem::class.java)
-
-            // Act
             viewModel.updateProductQuantity(product)
-
-            // Assert
             verify(repository, times(1)).updateQuantity(product.quantity, product.id)
         }
 
     @Test
     fun `deleteProductInCard calls safeCallDeleteProductInCard in viewModelScope`() =
         testCoroutineRule.testCoroutineScope.runTest {
-            // Arrange
             val productId = 1
-
-            // Act
             viewModel.deleteProductInCard(productId)
-
-            // Assert
             verify(repository, times(1)).productDao.deleteProductInShoppingBox(productId)
         }
 
     @Test
     fun `getSafeCallShoppingBoxProduct updates productsResponse with response from repository`() =
         testCoroutineRule.testCoroutineScope.runBlockingTest {
-            // Arrange
             val expectedResponse = listOf(mock(ShoppingBoxItem::class.java))
             `when`(repository.getShoppingBoxProducts()).thenReturn(expectedResponse)
-
-            // Act
             viewModel.getShoppinBoxProduct()
-
-            // Assert
             assertEquals(expectedResponse, viewModel.productsResponse.value)
         }
 }

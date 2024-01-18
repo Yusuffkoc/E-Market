@@ -25,54 +25,36 @@ class HomeViewModelTest {
 
 //    @get:Rule
 //    var instantTaskExecutorRule = InstantTaskExecutorRule()
-//
-//    @Mock
-//    private lateinit var mockProductRepository: ProductRepositoryImpl
-//
-//    @Mock
-//    private lateinit var mockApplication: Application
-//
-//    private lateinit var homeViewModel: HomeViewModel
-//
-//    private val testDispatcher = TestCoroutineDispatcher()
-//
-//    @Before
-//    fun setUp() {
-//        MockitoAnnotations.openMocks(this)
-//
-//        // Mock Application
-//        Mockito.`when`(mockApplication.applicationContext).thenReturn(mockApplication)
-//
-//        // Mock ProductRepository
-//        mockProductRepository = Mockito.mock(ProductRepositoryImpl::class.java)
-//
-//        // Initialize ViewModel with Mock ProductRepository and Mock Application
-//        homeViewModel = HomeViewModel(mockApplication, mockProductRepository)
-//    }
-//
+
+    @Mock
+    private lateinit var mockProductRepository: ProductRepositoryImpl
+
+    @Mock
+    private lateinit var mockApplication: Application
+
+    private lateinit var homeViewModel: HomeViewModel
+
+    private val testDispatcher = TestCoroutineDispatcher()
+
+    @Before
+    fun setUp() {
+        MockitoAnnotations.openMocks(this)
+        Mockito.`when`(mockApplication.applicationContext).thenReturn(mockApplication)
+        mockProductRepository = Mockito.mock(ProductRepositoryImpl::class.java)
+        homeViewModel = HomeViewModel(mockApplication, mockProductRepository)
+    }
+
 //    @Test
 //    fun `test getProducts when internet is available`() = testDispatcher.runBlockingTest {
-//        // Given
 //        Mockito.`when`(mockProductRepository.getProducts()).thenReturn(Response.success(ProductResponse(listOf())))
-//
-//        // When
 //        homeViewModel.getProducts()
-//
-//        // Then
 //        assertEquals(Resource.Success(ProductResponse(listOf())), homeViewModel.productsResponse.value)
 //    }
 //
 //    @Test
 //    fun `test getProducts when internet is not available`() = testDispatcher.runBlockingTest {
-//        // Given
 //        Mockito.`when`(mockProductRepository.getProducts()).thenThrow(IOException())
-//
-//        // When
 //        homeViewModel.getProducts()
-//
-//        // Then
 //        assertEquals(Resource.Error("Network Failure"), homeViewModel.productsResponse.value)
 //    }
-//
-//    // Add more tests for other functions as needed
 }
