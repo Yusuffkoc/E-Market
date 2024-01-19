@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:background="@drawable/star"
-                android:backgroundTint="@color/grey"
+                android:backgroundTint="@color/grey3"
                 android:textOff=""
                 android:textOn="" />
 

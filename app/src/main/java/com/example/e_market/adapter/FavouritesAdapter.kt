@@ -24,19 +24,21 @@ class FavouritesAdapter : RecyclerView.Adapter<FavouritesAdapter.ProductsViewHol
             binding.productPrice.text = product.price + " ₺"
             if (product.isFavorited){
                 binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+            }else{
+                binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
             }
 
             binding.favouriteStar.setOnClickListener {
-                if(binding.favouriteStar.isChecked){
+                product.isFavorited = !product.isFavorited
+                if(product.isFavorited){
                     binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
-                    product.isFavorited = true
                     favouriteItemClickListener?.let { it(product) }
                 }
                 else{
-                    binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                    product.isFavorited = false
+                    binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
                     deleteFavouriteItemClickListener?.let { it(product) }
                 }
+                notifyItemChanged(adapterPosition)
             }
         }
     }
