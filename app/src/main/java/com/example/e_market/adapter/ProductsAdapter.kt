@@ -26,8 +26,6 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
             binding.productPrice.text = product.price + " ₺"
             if (product.isFavorited){
                 binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
-            }else{
-                binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
             }
             binding.root.setOnClickListener {
                 onItemClickListener?.let { it(product) }
