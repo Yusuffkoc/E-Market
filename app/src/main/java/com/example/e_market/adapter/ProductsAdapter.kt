@@ -26,20 +26,17 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
             binding.productPrice.text = product.price + " ₺"
             if (product.isFavorited){
                 binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+            }else{
+                binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
             }
             binding.root.setOnClickListener {
                 onItemClickListener?.let { it(product) }
             }
             binding.favouriteStar.setOnClickListener {
-                if (binding.favouriteStar.isChecked) {
-                    binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
-                    product.isFavorited = true
-                    alreadyFavourited = false
+                product.isFavorited = !product.isFavorited
+                if (product.isFavorited) {
                     favouriteItemClickListener?.let { it(product) }
                 } else {
-                    binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                    product.isFavorited = false
-                    alreadyFavourited = true
                     deleteFavouriteItemClickListener?.let { it(product) }
                 }
                 notifyItemChanged(adapterPosition)

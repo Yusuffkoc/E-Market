@@ -88,12 +88,11 @@ class DetailFragment : Fragment() {
 
         binding.favouriteStar.setOnClickListener {
             product?.let { product ->
-                if (binding.favouriteStar.isChecked) {
-                    product.isFavorited = true
+                product.isFavorited = !product.isFavorited
+                if (product.isFavorited) {
                     binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
                     viewModel.saveFavouriteProduct(product)
                 } else {
-                    product.isFavorited = false
                     binding.favouriteStar.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
                     viewModel.deleteFavourite(product)
                 }
